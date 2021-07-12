@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 export default function Home() {
   return (
@@ -66,4 +67,13 @@ export default function Home() {
       </footer>
     </div>
   )
+}
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common', 'footer'])),
+      // Will be passed to the page component as props
+    },
+  };
 }
